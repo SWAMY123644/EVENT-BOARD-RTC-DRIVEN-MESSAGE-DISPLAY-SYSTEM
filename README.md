@@ -1,172 +1,101 @@
-EventBoard - RTC-Driven Message Display System
+EventBoard – RTC-Based Automated Message Display
 📌 Overview
 
-The EventBoard is an embedded system project designed to display predefined messages on an LCD at specific times using the RTC (Real-Time Clock) of the LPC2148 microcontroller.
+EventBoard is an embedded system built on the LPC2148 ARM7 microcontroller. Its purpose is to automatically show scheduled messages on a 16x2 LCD using the Real-Time Clock (RTC).
 
-It includes:
+Along with message scheduling, the system includes:
 
-Automated message scheduling
+A secure Admin Mode with keypad + password access
 
-Password-protected admin mode
+Editing of RTC time and enabling/disabling messages
 
-Real-time temperature display (using LM35 sensor)
+Temperature monitoring via LM35 sensor
 
-Visual indicators via LEDs
+🖼 System Block Diagram
 
-Secure time and message management
+Block Diagram
 
-⚙️ Features
-
-⏰ RTC-based scheduling – Messages are displayed at specific times.
-
-🔐 Admin Mode – Access secured with a switch and password-protected keypad.
-
-📝 Editable Messages – Select which messages are active for the day.
-
-🌡️ Temperature Monitoring – Displays room temperature when idle.
-
-💡 LED Indicators – Green = active schedule, Red = idle display.
-
-🔊 Buzzer Support – For event alerts.
-
-🛠️ Requirements
-Hardware
+⚙ Hardware Components
 
 LPC2148 Microcontroller
 
-16x2 LCD
+16x2 LCD Module
 
-Keypad
+4x4 Keypad
 
-LEDs (Red/Green)
+Status LEDs (Green = Active, Red = Idle)
 
 LM35 Temperature Sensor
 
 Buzzer
 
-Software
+💻 Software Tools
 
 Embedded C
 
-Keil uVision (C Compiler)
+Keil µVision (C compiler & IDE)
 
-Flash Magic (Programming Tool)
+Flash Magic (for programming LPC2148)
 
-🚀 How It Works
+🔄 Operating Modes
+Normal Mode
 
-Normal Mode:
+LCD continuously shows RTC time.
 
-Displays scheduled messages on LCD at the set time.
+If time matches a scheduled event → the message scrolls on LCD, and Green LED lights up.
 
-If no message is scheduled, shows RTC time and room temperature.
+If no message is scheduled → LCD displays time + room temperature, and Red LED lights up.
 
-Admin Mode (Switch + Password):
+Admin Mode
 
-Modify RTC time.
+Entered via external switch interrupt.
 
-Enable/disable messages for the day.
+Secured with password-protected keypad input.
 
-Indicators:
+Provides options to:
 
-Green LED → Scheduled message active.
+Edit RTC date/time
 
-Red LED → Idle (showing clock/temperature).
+Configure and activate/deactivate scheduled messages
 
-📋 Example Messages
+📂 Project Structure
+|-- Event_Board_Main.c       # Main entry file – integrates LCD, keypad, RTC, ADC, and settings
+|
+|-- lcd.c / lcd.h            # LCD driver – initialization, command/data functions, string/number display
+|
+|-- kpm.c / kpm.h            # Keypad driver – scanning rows/columns, key detection, numeric/password input
+|
+|-- adc.c / adc.h            # ADC driver – reads LM35 sensor values and converts to digital
+|
+|-- rtc.c / rtc.h            # RTC driver – initialization, set/get current date/time, display on LCD
+|
+|-- settings.c / settings.h  # Settings manager – update RTC and stored message configurations
+|
+|-- delay.c / delay.h        # Delay utilities – software-based ms/sec delays for timing
+|
+|-- pin_connect_block.c/.h   # Pin configuration – sets pin functions for peripherals
+|
+|-- defines.h / types.h /  
+|   interrupts_defines.h     # Shared headers – macros, typedefs, and interrupt definitions
 
-The system comes with 10 predefined messages (all enabled by default):
+🚀 Key Features
 
-07:45 → Good Morning! Classes Start Soon
+⏰ RTC-based scheduled message display
 
-13:45 → C Programming Session in Class Room 2
+📜 Scrolling messages on LCD
 
-10:15 → C Module Theory Exam – Lab1 (4th Floor)
+🔑 Secure Admin Mode with password protection
 
-12:45 → Lunch Break from 1PM – 2PM
+🌡 Real-time temperature sensing (LM35)
 
-17:45 → End of Day – See You Tomorrow!
+🔴🟢 LED-based status indication
 
-(and more… up to 10 messages)
+🎯 Use Cases
 
-🖼️ Block Diagram
+🏫 Smart school/college notice boards
 
-(Add block diagram image here if available, e.g., ![Block Diagram](images/block_diagram.png))
+🏢 Office reminders and event notifications
 
-✅ Ready to flash on LPC2148 and demonstrate automated event scheduling with real-time updates.
+🔬 Lab automation and schedule displays
 
-Would you like me to also add a “Project Setup & Usage” section (steps to compile in Keil, burn with Flash Magic, run on LPC2148), or keep this README lightweight?
-
-You said:
-please give me the other one ,i think this is not good
-ChatGPT said:
-
-Got it 👍
-Let me create a different style of README – shorter, cleaner, and more GitHub-friendly (something that looks nice at first glance, without too many technical paragraphs).
-
-⏰ EventBoard – RTC Driven Message Display
-
-A simple embedded system project using the LPC2148 microcontroller to display scheduled messages on an LCD with real-time updates.
-
-✨ Highlights
-
-📢 Displays scheduled messages automatically
-
-🔐 Secure Admin Mode (switch + keypad + password)
-
-🕒 RTC based control for accuracy
-
-🌡️ Shows temperature using LM35 sensor when idle
-
-💡 LED indicators:
-
-Green → Active schedule
-
-Red → Idle mode
-
-🛠 Hardware
-
-LPC2148
-
-16x2 LCD
-
-Keypad
-
-LEDs (Red/Green)
-
-LM35 Temperature Sensor
-
-Buzzer
-
-💻 Software
-
-Embedded C (Keil µVision)
-
-Flash Magic (programming tool)
-
-🚀 Quick Workflow
-
-System starts in Normal Mode.
-
-If time matches a scheduled message → show it on LCD.
-
-Otherwise → show RTC time + temperature.
-
-Enter Admin Mode using switch + password.
-
-Change RTC time.
-
-Enable/disable daily messages.
-
-📋 Default Messages
-
-Some predefined schedules:
-
-07:45 → Good Morning! Classes Start Soon
-
-10:15 → C Module Exam (Lab1 – 4th Floor)
-
-12:45 → Lunch Break (1–2 PM)
-
-17:45 → End of Day – See You Tomorrow!
-
-✅ Compact, secure, and real-time message display system.
+🏠 Home information displays
